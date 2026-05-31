@@ -11,7 +11,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +27,7 @@ fun PasswordGeneratorScreen(
 ) {
     val colors = LocalProfileColors.current
     val context = LocalContext.current
+    val clipboardManager = LocalClipboardManager.current
     
     var passwordLength by remember { mutableStateOf(12) }
     var useUppercase by remember { mutableStateOf(true) }
@@ -32,6 +35,7 @@ fun PasswordGeneratorScreen(
     var useSymbols by remember { mutableStateOf(true) }
     var generatedPassword by remember { mutableStateOf("") }
     var isAnimating by remember { mutableStateOf(false) }
+    var displayPassword by remember { mutableStateOf("") }
     
     Box(
         modifier = Modifier
@@ -74,7 +78,7 @@ fun PasswordGeneratorScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = if (generatedPassword.isEmpty()) "Tu contraseña" else generatedPassword,
+                        text = if (displayPassword.isEmpty()) "Tu contraseña" else displayPassword,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = androidx.compose.ui.graphics.Color.White,
@@ -145,8 +149,10 @@ fun PasswordGeneratorScreen(
                         uppercase = useUppercase,
                         numbers = useNumbers,
                         symbols = useSymbols,
+                        onUpdate = { tempPwd -> displayPassword = tempPwd },
                         onComplete = { pwd ->
                             generatedPassword = pwd
+                            displayPassword = pwd
                             isAnimating = false
                         }
                     )
@@ -173,7 +179,11 @@ fun PasswordGeneratorScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 OutlinedButton(
-                    onClick = { /* Copiar al portapapeles */ },
+                    onClick = {
+                        if (generatedPassword.isNotEmpty()) {
+                            clipboardManager.setText(AnnotatedString(generatedPassword))
+                        }
+                    },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -183,7 +193,16 @@ fun PasswordGeneratorScreen(
                 }
                 
                 OutlinedButton(
-                    onClick = { /* Compartir */ },
+                    onClick = {
+                        if (generatedPassword.isNotEmpty()) {
+                            val sendIntent = android.content.Intent().apply {
+                                action = android.content.Intent.ACTION_SEND
+                                putExtra(android.content.Intent.EXTRA_TEXT, generatedPassword)
+                                type = "text/plain"
+                            }
+                            context.startActivity(android.content.Intent.createChooser(sendIntent, "Compartir contraseña"))
+                        }
+                    },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -243,6 +262,7 @@ fun generatePasswordWithAnimation(
     uppercase: Boolean,
     numbers: Boolean,
     symbols: Boolean,
+    onUpdate: (String) -> Unit,
     onComplete: (String) -> Unit
 ) {
     val chars = buildString {
@@ -254,14 +274,15 @@ fun generatePasswordWithAnimation(
         if (symbols) append('!', '@', '#', '$', '%', '&', '*', '(', ')', '-', '_', '=', '+')
     }
     
-    // Animación de tragamonedas
-    kotlinx.coroutines.GlobalScope.launch {
+    // Usar coroutine scope apropiado
+    kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main).launch {
+        // Animación de tragamonedas
         repeat(15) { iteration ->
             val tempPassword = (1..length)
                 .map { chars[Random.nextInt(chars.length)] }
                 .joinToString("")
-            // Actualizar UI con delay
-            delay(100)
+            onUpdate(tempPassword)
+            delay(80)
         }
         
         // Generar contraseña final

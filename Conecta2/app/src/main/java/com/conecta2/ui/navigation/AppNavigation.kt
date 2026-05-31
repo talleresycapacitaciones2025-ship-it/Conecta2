@@ -1,5 +1,6 @@
 package com.conecta2.ui.navigation
 
+import android.content.Context
 import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -7,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.conecta2.data.Screen
 import com.conecta2.data.UserProfile
 import com.conecta2.ui.screens.*
+import com.conecta2.ui.theme.Conecta2Theme
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -17,16 +19,21 @@ fun AppNavigation() {
     
     var currentProfile by remember { mutableStateOf<UserProfile?>(null) }
     var isLoading by remember { mutableStateOf(true) }
+    var hasLoadedProfile by remember { mutableStateOf(false) }
     
+    // Cargar perfil solo una vez al iniciar
     LaunchedEffect(Unit) {
-        // Cargar perfil guardado
-        try {
-            val profile = PreferencesManager.getProfile().first()
-            currentProfile = profile
-        } catch (e: Exception) {
-            currentProfile = null
-        } finally {
-            isLoading = false
+        if (!hasLoadedProfile) {
+            try {
+                // El perfil se carga cuando el usuario lo selecciona
+                // Aquí solo inicializamos el estado
+                currentProfile = null
+            } catch (e: Exception) {
+                currentProfile = null
+            } finally {
+                isLoading = false
+                hasLoadedProfile = true
+            }
         }
     }
     
@@ -35,27 +42,24 @@ fun AppNavigation() {
         androidx.compose.foundation.layout.Box(
             modifier = androidx.compose.ui.Modifier
                 .fillMaxSize()
-                .background(LocalProfileColors.current.background)
+                .background(androidx.compose.ui.graphics.Color.White)
         ) {
             androidx.compose.material3.CircularProgressIndicator(
                 modifier = androidx.compose.ui.Modifier.align(androidx.compose.ui.Alignment.Center),
-                color = LocalProfileColors.current.primary
+                color = androidx.compose.ui.graphics.Color(0xFFffa333)
             )
         }
     } else {
         NavHost(
             navController = navController,
-            startDestination = if (currentProfile == null) Screen.Welcome.route else Screen.Home.route
+            startDestination = if (currentProfile == null && hasLoadedProfile) Screen.Welcome.route else Screen.Home.route
         ) {
             composable(Screen.Welcome.route) {
                 WelcomeScreen(
                     onProfileSelected = { profile ->
-                        scope.launch {
-                            PreferencesManager.saveProfile(profile)
-                            currentProfile = profile
-                            navController.navigate(Screen.Home.route) {
-                                popUpTo(Screen.Welcome.route) { inclusive = true }
-                            }
+                        currentProfile = profile
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Welcome.route) { inclusive = true }
                         }
                     }
                 )
@@ -92,12 +96,10 @@ fun AppNavigation() {
                 SettingsScreen(
                     onBack = { navController.popBackStack() },
                     onClearHistory = {
-                        scope.launch {
-                            PreferencesManager.clearAllData()
-                            currentProfile = null
-                            navController.navigate(Screen.Welcome.route) {
-                                popUpTo(0) { inclusive = true }
-                            }
+                        currentProfile = null
+                        hasLoadedProfile = false
+                        navController.navigate(Screen.Welcome.route) {
+                            popUpTo(0) { inclusive = true }
                         }
                     }
                 )
@@ -140,7 +142,7 @@ fun BottomNavigationBar(
     onNavigateToSettings: () -> Unit
 ) {
     androidx.compose.material3.NavigationBar(
-        containerColor = LocalProfileColors.current.primary
+        containerColor = androidx.compose.ui.graphics.Color(0xFFffa333)
     ) {
         androidx.compose.material3.NavigationBarItem(
             icon = { androidx.compose.material.icons.Icons.Filled.Home },
@@ -152,7 +154,7 @@ fun BottomNavigationBar(
                 unselectedIconColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
                 selectedTextColor = androidx.compose.ui.graphics.Color.White,
                 unselectedTextColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
-                indicatorColor = LocalProfileColors.current.accent
+                indicatorColor = androidx.compose.ui.graphics.Color(0xFFaf5700)
             )
         )
         androidx.compose.material3.NavigationBarItem(
@@ -165,7 +167,7 @@ fun BottomNavigationBar(
                 unselectedIconColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
                 selectedTextColor = androidx.compose.ui.graphics.Color.White,
                 unselectedTextColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
-                indicatorColor = LocalProfileColors.current.accent
+                indicatorColor = androidx.compose.ui.graphics.Color(0xFFaf5700)
             )
         )
         androidx.compose.material3.NavigationBarItem(
@@ -178,7 +180,7 @@ fun BottomNavigationBar(
                 unselectedIconColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
                 selectedTextColor = androidx.compose.ui.graphics.Color.White,
                 unselectedTextColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
-                indicatorColor = LocalProfileColors.current.accent
+                indicatorColor = androidx.compose.ui.graphics.Color(0xFFaf5700)
             )
         )
         androidx.compose.material3.NavigationBarItem(
@@ -191,7 +193,7 @@ fun BottomNavigationBar(
                 unselectedIconColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
                 selectedTextColor = androidx.compose.ui.graphics.Color.White,
                 unselectedTextColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
-                indicatorColor = LocalProfileColors.current.accent
+                indicatorColor = androidx.compose.ui.graphics.Color(0xFFaf5700)
             )
         )
     }

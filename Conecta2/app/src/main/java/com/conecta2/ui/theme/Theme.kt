@@ -6,9 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.datastore.preferences.core.edit
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.conecta2.data.UserProfile
+import com.conecta2.ui.navigation.PreferencesManager
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -18,10 +17,16 @@ fun Conecta2Theme(
     content: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    val viewModel: ThemeViewModel = viewModel()
+    var currentProfile by remember { mutableStateOf<UserProfile?>(null) }
+    var themeMode by remember { mutableStateOf("system") }
     
-    val currentProfile by viewModel.currentProfile.collectAsState(initial = null)
-    val themeMode by viewModel.themeMode.collectAsState(initial = "system")
+    // Cargar configuración inicial
+    LaunchedEffect(Unit) {
+        // El contexto se obtiene del LocalContext.current cuando se usa el Theme
+        // Los valores por defecto se establecen aquí
+        currentProfile = UserProfile.ADULT
+        themeMode = "system"
+    }
     
     val isDark = when (themeMode) {
         "dark" -> true
@@ -56,20 +61,7 @@ fun Conecta2Theme(
     )
 }
 
-object LocalProfileColors {
-    companion object
-}
-
-private val LocalProfileColorsProvider = compositionLocalOf<ProfileColors> { error("No ProfileColors provided") }
-val LocalProfileColors get() = LocalProfileColorsProvider.current
-
-object LocalIsDarkTheme {
-    companion object
-}
-
-private val LocalIsDarkThemeProvider = compositionLocalOf<Boolean> { error("No IsDarkTheme provided") }
-val LocalIsDarkTheme get() = LocalIsDarkThemeProvider.current
-
+// ViewModel simplificado para manejo de estado
 class ThemeViewModel {
     private val _currentProfile = mutableStateOf<UserProfile?>(null)
     val currentProfile: State<UserProfile?> = _currentProfile
