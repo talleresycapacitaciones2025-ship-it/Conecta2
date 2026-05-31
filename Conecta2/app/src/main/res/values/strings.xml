@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Conecta2</string>
+    
+    <!-- Navegación -->
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_aprende">Aprende</string>
+    <string name="nav_juegos">Juegos</string>
+    <string name="nav_ajustes">Ajustes</string>
+    
+    <!-- Pantalla de bienvenida -->
+    <string name="welcome_title">¡Bienvenido/a a Conecta2!</string>
+    <string name="welcome_subtitle">Tu app de ciberseguridad familiar</string>
+    <string name="btn_adult">Persona adulta / Cuidador/a</string>
+    <string name="btn_teen">Aventurera / Aventurero</string>
+    
+    <!-- Perfil adulto -->
+    <string name="adult_greeting">¡Hola, cuidador/a!</string>
+    <string name="adult_subtitle">Gestiona la seguridad digital de tu familia</string>
+    
+    <!-- Perfil menor -->
+    <string name="teen_greeting">¡Hola, aventurero/a!</string>
+    <string name="teen_subtitle">Aprende a navegar seguro en internet</string>
+    <string name="teen_agreement_notice">Pide a un adulto que revise el convenio contigo</string>
+    
+    <!-- Juego huella digital -->
+    <string name="fingerprint_title">¿Qué información dejas en internet?</string>
+    <string name="fingerprint_subtitle">Toca los servicios que usas para ver tu huella</string>
+    <string name="btn_view_fingerprint">Ver mi huella</string>
+    <string name="btn_reset">Reiniciar</string>
+    <string name="fingerprint_summary">Resumen de tu huella digital</string>
+    <string name="fingerprint_advice">Consejos para reducir tu exposición</string>
+    
+    <!-- Juego emparejar -->
+    <string name="match_title">Empareja conceptos</string>
+    <string name="match_score">Puntaje: %1$d/%2$d</string>
+    <string name="match_final_score">¡Completado! Puntaje final: %1$d/%2$d</string>
+    <string name="btn_play_again">Jugar otra vez</string>
+    
+    <!-- Sección Aprende -->
+    <string name="tab_dangers">Peligros en internet</string>
+    <string name="tab_protection">Cómo proteger tu huella</string>
+    <string name="tab_family">Consejos para familias</string>
+    <string name="card_front_tap">Toca para voltear</string>
+    
+    <!-- Convenio familiar -->
+    <string name="agreement_title">Convenio Familiar Digital</string>
+    <string name="agreement_subtitle">Establece reglas claras para el uso de internet</string>
+    <string name="btn_generate_pdf">Generar PDF</string>
+    <string name="btn_share_pdf">Compartir PDF</string>
+    <string name="agreement_generated">Convenio generado exitosamente</string>
+    
+    <!-- Generador de contraseñas -->
+    <string name="password_title">Generador de Contraseñas</string>
+    <string name="password_length">Longitud: %1$d</string>
+    <string name="option_uppercase">Mayúsculas</string>
+    <string name="option_numbers">Números</string>
+    <string name="option_symbols">Símbolos</string>
+    <string name="btn_generate">Generar</string>
+    <string name="btn_copy">Copiar</string>
+    <string name="btn_share">Compartir</string>
+    <string name="password_strength_weak">Débil</string>
+    <string name="password_strength_medium">Media</string>
+    <string name="password_strength_strong">Fuerte</string>
+    <string name="password_copied">Contraseña copiada</string>
+    
+    <!-- Ajustes -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_theme">Tema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="theme_system">Seguir sistema</string>
+    <string name="settings_clear_history">Limpiar historial</string>
+    <string name="settings_clear_confirm">¿Estás seguro/a? Se borrarán todos los datos guardados.</string>
+    <string name="btn_confirm">Confirmar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="history_cleared">Historial limpiado</string>
+    
+    <!-- Servicios del juego huella -->
+    <string-array name="services_list">
+        <item>Instagram</item>
+        <item>TikTok</item>
+        <item>WhatsApp</item>
+        <item>Facebook</item>
+        <item>Twitter/X</item>
+        <item>Snapchat</item>
+        <item>Twitch</item>
+        <item>Telegram</item>
+        <item>LinkedIn</item>
+        <item>YouTube</item>
+        <item>Spotify</item>
+        <item>Amazon</item>
+        <item>MAX</item>
+        <item>Netflix</item>
+        <item>Disney+</item>
+        <item>Temu</item>
+        <item>Roblox</item>
+        <item>Juegos en línea</item>
+        <item>Google</item>
+    </string-array>
+</resources>

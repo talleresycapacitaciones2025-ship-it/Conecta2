@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#ffa333</color>
+    
+    <!-- Naranjas de la paleta -->
+    <color name="orange_dark">#af5700</color>
+    <color name="orange_dark_mid">#c06500</color>
+    <color name="orange_mid_dark">#d27300</color>
+    <color name="orange_mid">#e48200</color>
+    <color name="orange_mid_light">#f69100</color>
+    <color name="orange_primary">#ffa333</color>
+    <color name="orange_light">#ffba6a</color>
+    <color name="orange_lighter">#ffd19b</color>
+    <color name="orange_cream">#ffe8cd</color>
+    <color name="white">#ffffff</color>
+    
+    <!-- Modo oscuro -->
+    <color name="dark_background">#1E1E2E</color>
+</resources>

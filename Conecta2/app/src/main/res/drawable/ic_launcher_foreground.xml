@@ -1,0 +1,88 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Fondo degradado naranja -->
+    <path
+        android:fillColor="#ffa333"
+        android:pathData="M0,0h108v108H0z"/>
+    
+    <!-- Escudo dividido -->
+    <group android:translateX="54" android:translateY="50">
+        <!-- Mitad izquierda blanca -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M-20,-25 C-20,-25 -32,-18 -32,-5 C-32,8 -25,18 -20,25 C-15,30 0,35 0,35 C0,35 15,30 20,25 C25,18 32,8 32,-5 C32,-18 20,-25 20,-25 L0,-25 Z"/>
+        
+        <!-- Mitad derecha naranja -->
+        <path
+            android:fillColor="#ffa333"
+            android:pathData="M0,-25 L20,-25 C20,-25 32,-18 32,-5 C32,8 25,18 20,25 C15,30 0,35 0,35 V-25 Z"/>
+        
+        <!-- Huella digital estilizada -->
+        <group android:translateX="0" android:translateY="5">
+            <path
+                android:strokeColor="#FFFFFF"
+                android:strokeWidth="1.5"
+                android:fillColor="#00000000"
+                android:pathData="M-8,8 C-8,8 -10,5 -10,2 C-10,-1 -8,-4 -6,-4 C-4,-4 -2,-2 -2,0 C-2,2 -4,4 -6,4"/>
+            <path
+                android:strokeColor="#FFFFFF"
+                android:strokeWidth="1.5"
+                android:fillColor="#00000000"
+                android:pathData="M-4,10 C-4,10 -6,7 -6,4 C-6,1 -4,-2 -2,-2 C0,-2 2,0 2,2 C2,4 0,6 -2,6"/>
+            <path
+                android:strokeColor="#FFFFFF"
+                android:strokeWidth="1.5"
+                android:fillColor="#00000000"
+                android:pathData="M0,12 C0,12 -2,9 -2,6 C-2,3 0,0 2,0 C4,0 6,2 6,4 C6,6 4,8 2,8"/>
+            <path
+                android:strokeColor="#FFFFFF"
+                android:strokeWidth="1.5"
+                android:fillColor="#00000000"
+                android:pathData="M4,10 C4,10 2,7 2,4 C2,1 4,-2 6,-2 C8,-2 10,0 10,2 C10,4 8,6 6,6"/>
+            <path
+                android:strokeColor="#FFFFFF"
+                android:strokeWidth="1.5"
+                android:fillColor="#00000000"
+                android:pathData="M8,8 C8,8 6,5 6,2 C6,-1 8,-4 10,-4"/>
+        </group>
+    </group>
+    
+    <!-- Niña a la izquierda -->
+    <group android:translateX="22" android:translateY="55">
+        <!-- Cabeza -->
+        <circle android:cx="0" android:cy="-8" android:radius="6" android:fillColor="#ffe8cd"/>
+        <!-- Cuerpo/camiseta blanca -->
+        <path android:fillColor="#FFFFFF" android:pathData="M-5,-3 L5,-3 L7,8 L-7,8 Z"/>
+        <!-- Coleta -->
+        <path android:fillColor="#af5700" android:pathData="M5,-10 C8,-12 10,-8 8,-5 C6,-3 5,-5 5,-8 Z"/>
+        <!-- Ojos -->
+        <circle android:cx="-2" android:cy="-9" android:radius="0.8" android:fillColor="#af5700"/>
+        <circle android:cx="2" android:cy="-9" android:radius="0.8" android:fillColor="#af5700"/>
+        <!-- Sonrisa -->
+        <path android:strokeColor="#af5700" android:strokeWidth="0.5" android:fillColor="#00000000" android:pathData="M-2,-6 Q0,-4 2,-6"/>
+    </group>
+    
+    <!-- Lupa con candado a la derecha -->
+    <group android:translateX="86" android:translateY="55">
+        <!-- Mango lupa -->
+        <path android:fillColor="#FFFFFF" android:pathData="M8,10 L12,14 L10,16 L6,12 Z"/>
+        <!-- Lente lupa -->
+        <circle android:cx="0" android:cy="0" android:radius="7" android:fillColor="#00000000" android:strokeColor="#FFFFFF" android:strokeWidth="1.5"/>
+        <!-- Candado dentro del lente -->
+        <rect android:x="-3" android:y="-2" android:width="6" android:height="5" android:fillColor="#FFFFFF" android:rx="1"/>
+        <path android:strokeColor="#FFFFFF" android:strokeWidth="1" android:fillColor="#00000000" android:pathData="M-2,-2 V-4 C-2,-6 2,-6 2,-4 V-2"/>
+        <!-- Punto del candado -->
+        <circle android:cx="0" android:cy="0" android:radius="0.8" android:fillColor="#ffa333"/>
+    </group>
+    
+    <!-- Texto "Conecta2" en la parte inferior -->
+    <group android:translateX="54" android:translateY="95">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M-35,-5 L-35,5 L-30,5 L-30,3 L-25,3 L-25,5 L-20,5 L-20,-5 L-25,-5 C-28,-5 -30,-3 -30,0 C-30,-3 -32,-5 -35,-5 Z M-25,0 L-25,3 L-30,3 L-30,0 C-30,-1 -29,-2 -28,-2 L-25,-2 Z"/>
+    </group>
+</vector>
