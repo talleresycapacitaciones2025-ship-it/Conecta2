@@ -26,16 +26,29 @@ fun MatchGameScreen(
     val colors = LocalProfileColors.current
     
     var gameItems by remember { mutableStateOf<List<Pair<MatchItem, MatchItem>>>(emptyList()) }
-    var selectedTerm by remember { mutableStateOf<MatchItem?>(null) }
-    var selectedDef by remember { mutableStateOf<MatchItem?>(null) }
+    var selectedTermId by remember { mutableStateOf<Int?>(null) }
+    var selectedDefId by remember { mutableStateOf<Int?>(null) }
     var matchedPairs by remember { mutableStateOf<List<Int>>(emptyList()) }
     var score by remember { mutableStateOf(0) }
+    var showResult by remember { mutableStateOf(false) }
     
     LaunchedEffect(Unit) {
-        // Seleccionar 10 preguntas aleatorias
+        startNewGame()
+    }
+    
+    fun startNewGame() {
+        // Seleccionar 10 preguntas aleatorias con IDs únicos
         val shuffled = matchQuestionsPool.shuffled().take(10)
-        val definitions = shuffled.map { it.copy(id = it.id + 100) }.shuffled()
+        // Las definiciones obtienen IDs offseteados para evitar colisiones
+        val definitions = shuffled.mapIndexed { index, item -> 
+            item.copy(id = 100 + index) 
+        }.shuffled()
         gameItems = shuffled.zip(definitions)
+        matchedPairs = emptyList()
+        score = 0
+        selectedTermId = null
+        selectedDefId = null
+        showResult = false
     }
     
     Box(
@@ -92,9 +105,9 @@ fun MatchGameScreen(
                         if (!matchedPairs.contains(term.id)) {
                             MatchCard(
                                 text = term.term,
-                                isSelected = selectedTerm?.id == term.id,
+                                isSelected = selectedTermId == term.id,
                                 isMatched = false,
-                                onClick = { selectedTerm = term },
+                                onClick = { selectedTermId = term.id },
                                 colors = colors,
                                 isTerm = true
                             )
@@ -113,9 +126,9 @@ fun MatchGameScreen(
                         if (!matchedPairs.contains(term.id)) {
                             MatchCard(
                                 text = def.definition,
-                                isSelected = selectedDef?.id == def.id,
+                                isSelected = selectedDefId == def.id,
                                 isMatched = false,
-                                onClick = { selectedDef = def },
+                                onClick = { selectedDefId = def.id },
                                 colors = colors,
                                 isTerm = false
                             )
@@ -126,7 +139,7 @@ fun MatchGameScreen(
         }
         
         // Mensaje de completado
-        if (matchedPairs.size == gameItems.size && gameItems.isNotEmpty()) {
+        if (matchedPairs.size == gameItems.size && gameItems.isNotEmpty() && showResult) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -163,15 +176,7 @@ fun MatchGameScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
-                            onClick = {
-                                val shuffled = matchQuestionsPool.shuffled().take(10)
-                                val definitions = shuffled.map { it.copy(id = it.id + 100) }.shuffled()
-                                gameItems = shuffled.zip(definitions)
-                                matchedPairs = emptyList()
-                                score = 0
-                                selectedTerm = null
-                                selectedDef = null
-                            },
+                            onClick = { startNewGame() },
                             colors = ButtonDefaults.buttonColors(containerColor = colors.primary)
                         ) {
                             Text("Jugar otra vez")
@@ -183,16 +188,20 @@ fun MatchGameScreen(
     }
     
     // Verificar emparejamiento
-    LaunchedEffect(selectedTerm, selectedDef) {
-        if (selectedTerm != null && selectedDef != null) {
-            val pair = gameItems.find { it.first.id == selectedTerm!!.id }
-            if (pair != null && pair.second.id == selectedDef!!.id) {
+    LaunchedEffect(selectedTermId, selectedDefId) {
+        if (selectedTermId != null && selectedDefId != null) {
+            val pair = gameItems.find { it.first.id == selectedTermId }
+            if (pair != null && pair.second.id == selectedDefId) {
                 // Correcto
                 matchedPairs = matchedPairs + pair.first.id
                 score = score + 1
+                // Mostrar resultado si completó todo
+                if (matchedPairs.size == gameItems.size) {
+                    showResult = true
+                }
             }
-            selectedTerm = null
-            selectedDef = null
+            selectedTermId = null
+            selectedDefId = null
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.conecta2.ui.theme
 
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 // Paleta de colores naranjas
@@ -53,3 +54,17 @@ val DarkColors = ProfileColors(
     textPrimary = White,
     textSecondary = OrangeLight
 )
+
+// CompositionLocals para acceso global
+val LocalProfileColors = compositionLocalOf<ProfileColors> { error("No ProfileColors provided") }
+val LocalIsDarkTheme = compositionLocalOf<Boolean> { error("No IsDarkTheme provided") }
+
+// Función auxiliar para verificar si es perfil teen en modo claro
+fun isTeenLightProfile(colors: ProfileColors): Boolean {
+    return colors.background == OrangeCream && colors.primary == OrangeLight
+}
+
+// Función auxiliar para verificar si es perfil adult en modo claro
+fun isAdultLightProfile(colors: ProfileColors): Boolean {
+    return colors.background == White && colors.primary == OrangePrimary
+}

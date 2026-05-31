@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.conecta2.data.UserProfile
 import com.conecta2.ui.theme.LocalProfileColors
+import com.conecta2.ui.theme.isAdultLightProfile
+import com.conecta2.ui.theme.isTeenLightProfile
 
 @Composable
 fun WelcomeScreen(
@@ -73,7 +75,7 @@ fun WelcomeScreen(
                     text = "Persona adulta / Cuidador/a",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
-                    color = if (LocalProfileColors.current == AdultLightColors) colors.textPrimary else androidx.compose.ui.graphics.Color.White
+                    color = if (isAdultLightProfile(colors)) colors.textPrimary else androidx.compose.ui.graphics.Color.White
                 )
             }
             
@@ -94,7 +96,7 @@ fun WelcomeScreen(
                     text = "Aventurera / Aventurero",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
-                    color = if (LocalProfileColors.current == TeenLightColors) colors.textPrimary else androidx.compose.ui.graphics.Color.White
+                    color = if (isTeenLightProfile(colors)) colors.textPrimary else androidx.compose.ui.graphics.Color.White
                 )
             }
         }
